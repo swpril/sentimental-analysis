@@ -1,0 +1,53 @@
+<form>
+  <div>
+    <label nzFor="search">Search </label>
+    <input id="search" [formControl]="searchFormControl" />
+  </div>
+</form>
+<nz-table
+  #table
+  [nzSize]="tableSize"
+  [nzScroll]="scrollConfig"
+  [nzData]="tableData$ | async"
+  [nzFrontPagination]="!isServerSidePagination"
+  [nzLoading]="loading"
+  [(nzPageIndex)]="pageIndex"
+  (nzPageIndexChange)="onPaginationChange()"
+  [nzTotal]="totalRows"
+  [nzPageSize]="pageSize"
+>
+  <thead>
+    <tr>
+      <ng-container *ngFor="let col of columns">
+        <ng-container
+          *ngIf="col.showDropdown; else nonStickyColumnHeaderWithoutDropdown"
+        >
+          <th
+            [nzWidth]="col.width"
+            nzAlign="center"
+            nz-select
+            nzShowFilter
+            [nzFilters]="col.dropdownConfig"
+            (nzFilterChange)="onFilterChange($event)"
+          >
+            {{ col.header }}
+          </th>
+        </ng-container>
+        <ng-template #nonStickyColumnHeaderWithoutDropdown>
+          <th [nzWidth]="col.width" nzAlign="center">
+            {{ col.header }}
+          </th>
+        </ng-template>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let entity of table.data">
+      <ng-container *ngFor="let col of columns">
+        <td nzAlign="center">
+          {{ entity[col.field] }}
+        </td>
+      </ng-container>
+    </tr>
+  </tbody>
+</nz-table>

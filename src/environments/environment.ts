@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  hackerNewsServerUrl: 'https://hacker-news.firebaseio.com/v0/topstories.json',
+  hackerNewsItemUrl: 'https://hacker-news.firebaseio.com/v0/item/',
+  sentimentAnalysisServerUrl: 'https://text-sentiment.p.rapidapi.com/analyze'
 };
 
 /*
